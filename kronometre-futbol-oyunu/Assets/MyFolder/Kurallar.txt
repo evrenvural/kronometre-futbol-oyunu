@@ -1,0 +1,3 @@
+GOL: 00 veya 99 iken durursa gol sayılırdı. 
+Penaltı: 11,22,33 gibi diğer varyasyonlarda karşı ekip ile "tek mi çift mi" şeklinde iddialaşıldıktan sonra durdurulunca gelen salise sizin tahmin ettiğiniz şekilde ise yine gol olurdu. 
+Frikik 10,20,30,40 gibi sayılar ise frikik idi. frikikte fena halde yanılmıyorsam hedef kronometreyi 50 ile 60 arasında durdurmak idi.
