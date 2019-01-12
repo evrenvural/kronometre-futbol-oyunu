@@ -2,47 +2,58 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class Kontrol : MonoBehaviour
 {
     public Image[] image;
     public Sprite[] sayilar;
+    public Button btnStart;
+    public Image siraGosterici;
+
+    int saniyeBir, saniyeIki, saliseBir, saliseIki;
+    bool siraBende = true;
+
     TimeSpan ts;
     Stopwatch stopwatch;
-
+    Vector3 vector2;
 
     void Start()
     {
         stopwatch = new Stopwatch();
-        
-       
+        vector2 = new Vector3(352.0f, 0,0);
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         KronometreKontrol();
-      
-    }
+        
 
+    }
+   
+    // Değerler hesaplanır ve imagelara gönderilir.
     void KronometreKontrol()
     {
         if (stopwatch.IsRunning)
         {
             ts = stopwatch.Elapsed;
-            int saniyeBir = ts.Seconds % 10;
-            int saniyeIki = ts.Seconds / 10;
-            int saliseBir = ts.Milliseconds & 10;
-            int saliseIki = ts.Milliseconds / 100;
+            saniyeBir = ts.Seconds % 10;
+            saniyeIki = ts.Seconds / 10;
+            saliseBir = ts.Milliseconds & 10;
+            saliseIki = ts.Milliseconds / 100;
             SayilaraGoreImageAta(saliseBir, image[0]);
             SayilaraGoreImageAta(saliseIki, image[1]);
             SayilaraGoreImageAta(saniyeBir, image[2]);
             SayilaraGoreImageAta(saniyeIki, image[3]);
         }
-    }
+    }   
 
+    // Kronometreden gelen değerlere göre imagelar sayıları gösterir.
     void SayilaraGoreImageAta(int sayi, Image image)
     {
         switch (sayi)
@@ -83,7 +94,7 @@ public class Kontrol : MonoBehaviour
         }
     }
 
-    public void KronometreBaslatDurdur()
+    public void InsaniOynat()
     {
         if (!stopwatch.IsRunning)
         {
@@ -92,6 +103,38 @@ public class Kontrol : MonoBehaviour
         else
         {
             stopwatch.Stop();
+            siraGosterici.transform.position += vector2;
+            siraBende = false;
+            btnStart.enabled = false;
+            StartCoroutine(BilgisayariOynat());
+        }
+    }
+
+    IEnumerator BilgisayariOynat()
+    {
+        if (!siraBende) // Sıra Bilgisayarda
+        {
+            yield return new WaitForSeconds(1);
+            stopwatch.Start();
+            int zaman = Random.Range(1, 4);
+            yield return new WaitForSeconds(zaman);
+            stopwatch.Stop();
+            siraGosterici.transform.position -= vector2;
+            siraBende = true;
+            btnStart.enabled = true;
+        }
+    }
+
+    bool Gol()
+    {
+        return saliseBir == 0 && saliseIki == 0 || saniyeBir == 9 && saniyeIki == 9;
+    }
+
+    void MacKurallariKontrol()
+    {
+        if (Gol())
+        {
+            //Sıranın kimde olduğunu bilmem lazım.
         }
     }
 }
