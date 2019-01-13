@@ -1,3 +1,3 @@
 GOL: 00 veya 99 iken durursa gol sayýlýrdý. 
 Penaltý: 11,22,33 gibi diðer varyasyonlarda karþý ekip ile "tek mi çift mi" þeklinde iddialaþýldýktan sonra durdurulunca gelen salise sizin tahmin ettiðiniz þekilde ise yine gol olurdu. 
-Frikik 10,20,30,40 gibi sayýlar ise frikik idi. frikikte fena halde yanýlmýyorsam hedef kronometreyi 50 ile 60 arasýnda durdurmak idi.
+Frikik 10,20,30,40 gibi sayýlar ise frikik idi. frikikte fena halde yanýlmýyorsam hedef kronometreyi 11,22,33 gibi diðer varyasyonlarda olmasýydý.

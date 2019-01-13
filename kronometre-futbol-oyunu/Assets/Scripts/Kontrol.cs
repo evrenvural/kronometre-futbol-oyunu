@@ -11,7 +11,7 @@ public class Kontrol : MonoBehaviour
 {
     public Image[] image;
     public Sprite[] sayilar;
-    public Button btnStart, btnDuranTop;
+    public Button btnStart, btnDuranTop, btnPenalti;
     public Image siraGosterici;
     public Text tskor1, tskor2;
 
@@ -34,9 +34,7 @@ public class Kontrol : MonoBehaviour
     {
         
         KronometreKontrol();
-        
-
-    }
+  }
    
     // Değerler hesaplanır ve imagelara gönderilir.
     void KronometreKontrol()
@@ -103,7 +101,7 @@ public class Kontrol : MonoBehaviour
         {
             stopwatch.Stop();
             KuralKontrol();
-            if (!Frikik())//Penaltı gelecek
+            if (!Frikik() && !Penalti())//Penaltı gelecek
             {
                 siraGosterici.transform.position += vector2;
                 btnStart.enabled = false;
@@ -130,6 +128,14 @@ public class Kontrol : MonoBehaviour
             yield return new WaitForSeconds(zaman);
             FrikikVur();
         }
+        if (Penalti())
+        {
+            yield return new WaitForSeconds(1);
+            PenaltiVur();
+            zaman = Random.Range(1, 4);
+            yield return new WaitForSeconds(zaman);
+            PenaltiVur();
+        }
         siraGosterici.transform.position -= vector2;
         siraBende = true;
         btnStart.enabled = true;
@@ -153,6 +159,18 @@ public class Kontrol : MonoBehaviour
             saliseBir == 0 && saliseIki == 8 ||
             saliseBir == 0 && saliseIki == 9;
     }
+    bool Penalti()
+    {
+        return saliseBir == 1 && saliseIki == 1 ||
+            saliseBir == 2 && saliseIki == 2 ||
+            saliseBir == 3 && saliseIki == 3 ||
+            saliseBir == 4 && saliseIki == 4 ||
+            saliseBir == 5 && saliseIki == 5 ||
+            saliseBir == 6 && saliseIki == 6 ||
+            saliseBir == 7 && saliseIki == 7 ||
+            saliseBir == 8 && saliseIki == 8 ||
+            saliseBir == 9 && saliseIki == 9;
+    }
 
     void KuralKontrol()
     {
@@ -173,7 +191,12 @@ public class Kontrol : MonoBehaviour
         {
             btnStart.gameObject.SetActive(false);
             btnDuranTop.gameObject.SetActive(true);
-        }         
+        }
+        if (Penalti() && siraBende)
+        {
+            btnStart.gameObject.SetActive(false);
+            btnPenalti.gameObject.SetActive(true);
+        }
     }
 
     bool FrikikGolMu()
@@ -186,9 +209,52 @@ public class Kontrol : MonoBehaviour
             saliseBir == 6 && saliseIki == 6 ||
             saliseBir == 7 && saliseIki == 7 ||
             saliseBir == 8 && saliseIki == 8 ||
+            saliseBir == 0 && saliseIki == 0 ||
             saliseBir == 9 && saliseIki == 9;
     }
+    bool PenaltiGolMu()
+    {
+        return saliseBir % 2 == 0;
+    }
 
+    public void PenaltiVur()
+    {
+        if (!stopwatch.IsRunning)
+        {
+            stopwatch.Start();
+        }
+        else
+        {
+            stopwatch.Stop();
+            if (PenaltiGolMu())
+            {
+                if (siraBende)
+                {
+                    skor1++;
+                    tskor1.text = skor1.ToString();
+                }
+                else
+                {
+                    skor2++;
+                    tskor2.text = skor2.ToString();
+                }
+            }
+
+            btnStart.gameObject.SetActive(true);
+            btnPenalti.gameObject.SetActive(false);
+
+            // Sırayı Devret
+            if (siraBende)
+            {
+
+                siraGosterici.transform.position += vector2;
+                btnStart.enabled = false;
+                siraBende = false;
+                StartCoroutine(BilgisayariOynat());
+            }
+
+        }
+    }
     public void FrikikVur()
     {
         if (!stopwatch.IsRunning)
