@@ -13,8 +13,10 @@ public class Kontrol : MonoBehaviour
     public Sprite[] sayilar;
     public Button btnStart;
     public Image siraGosterici;
+    public Text tskor1, tskor2;
 
     int saniyeBir, saniyeIki, saliseBir, saliseIki;
+    int skor1, skor2;
     bool siraBende = true;
 
     TimeSpan ts;
@@ -100,13 +102,15 @@ public class Kontrol : MonoBehaviour
         {
             stopwatch.Start();
         }
-        else
+        else // Sıra Bende
         {
             stopwatch.Stop();
             siraGosterici.transform.position += vector2;
             siraBende = false;
             btnStart.enabled = false;
+            MacKurallariKontrol();
             StartCoroutine(BilgisayariOynat());
+            
         }
     }
 
@@ -122,6 +126,7 @@ public class Kontrol : MonoBehaviour
             siraGosterici.transform.position -= vector2;
             siraBende = true;
             btnStart.enabled = true;
+            MacKurallariKontrol();
         }
     }
 
@@ -134,7 +139,18 @@ public class Kontrol : MonoBehaviour
     {
         if (Gol())
         {
-            //Sıranın kimde olduğunu bilmem lazım.
+            if (!siraBende) //Kullanıcı Yeri Not: bool değiştikten sonra bu methot çağrıldığı için ters koydum.
+            {
+                skor1 = Convert.ToInt16(tskor1.text);
+                skor1++;
+                tskor1.text = skor1.ToString();
+            }
+            else // Bilgisayar Yeri
+            {
+                skor2 = Convert.ToInt16(tskor2.text);
+                skor2++;
+                tskor2.text = skor2.ToString();
+            }
         }
     }
 }
