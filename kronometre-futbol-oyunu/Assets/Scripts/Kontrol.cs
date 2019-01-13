@@ -11,12 +11,12 @@ public class Kontrol : MonoBehaviour
 {
     public Image[] image;
     public Sprite[] sayilar;
-    public Button btnStart;
+    public Button btnStart, btnDuranTop;
     public Image siraGosterici;
     public Text tskor1, tskor2;
 
-    int saniyeBir, saniyeIki, saliseBir, saliseIki;
-    int skor1, skor2;
+    int saniyeBir=0, saniyeIki=0, saliseBir=0, saliseIki=0;
+    int skor1=0, skor2=0;
     bool siraBende = true;
 
     TimeSpan ts;
@@ -90,9 +90,6 @@ public class Kontrol : MonoBehaviour
             case 9:
                 image.sprite = sayilar[9];
                 break;
-            default:
-                image.sprite = sayilar[0];
-                break;
         }
     }
 
@@ -105,52 +102,131 @@ public class Kontrol : MonoBehaviour
         else // Sıra Bende
         {
             stopwatch.Stop();
-            siraGosterici.transform.position += vector2;
-            siraBende = false;
-            btnStart.enabled = false;
-            MacKurallariKontrol();
-            StartCoroutine(BilgisayariOynat());
-            
+            KuralKontrol();
+            if (!Frikik())//Penaltı gelecek
+            {
+                siraGosterici.transform.position += vector2;
+                btnStart.enabled = false;
+                siraBende = false;
+                StartCoroutine(BilgisayariOynat());
+            }
         }
     }
 
     IEnumerator BilgisayariOynat()
     {
-        if (!siraBende) // Sıra Bilgisayarda
+        
+        yield return new WaitForSeconds(1);
+        stopwatch.Start();
+        int zaman = Random.Range(1, 4);
+        yield return new WaitForSeconds(zaman);
+        stopwatch.Stop();
+        KuralKontrol();
+        if (Frikik())
         {
             yield return new WaitForSeconds(1);
-            stopwatch.Start();
-            int zaman = Random.Range(1, 4);
+            FrikikVur();
+            zaman = Random.Range(1, 4);
             yield return new WaitForSeconds(zaman);
-            stopwatch.Stop();
-            siraGosterici.transform.position -= vector2;
-            siraBende = true;
-            btnStart.enabled = true;
-            MacKurallariKontrol();
+            FrikikVur();
         }
+        siraGosterici.transform.position -= vector2;
+        siraBende = true;
+        btnStart.enabled = true;
+            
     }
 
     bool Gol()
     {
-        return saliseBir == 0 && saliseIki == 0 || saniyeBir == 9 && saniyeIki == 9;
+        return saliseBir == 0 && saliseIki == 0 || saliseBir == 9 && saliseIki == 9;
     }
 
-    void MacKurallariKontrol()
+    bool Frikik()
+    {
+        return saliseBir == 0 && saliseIki == 1 ||
+            saliseBir == 0 && saliseIki == 2 ||
+            saliseBir == 0 && saliseIki == 3 ||
+            saliseBir == 0 && saliseIki == 4 ||
+            saliseBir == 0 && saliseIki == 5 ||
+            saliseBir == 0 && saliseIki == 6 ||
+            saliseBir == 0 && saliseIki == 7 ||
+            saliseBir == 0 && saliseIki == 8 ||
+            saliseBir == 0 && saliseIki == 9;
+    }
+
+    void KuralKontrol()
     {
         if (Gol())
         {
-            if (!siraBende) //Kullanıcı Yeri Not: bool değiştikten sonra bu methot çağrıldığı için ters koydum.
+            if (siraBende) 
             {
-                skor1 = Convert.ToInt16(tskor1.text);
                 skor1++;
                 tskor1.text = skor1.ToString();
             }
-            else // Bilgisayar Yeri
+            else 
             {
-                skor2 = Convert.ToInt16(tskor2.text);
                 skor2++;
                 tskor2.text = skor2.ToString();
             }
         }
+        if (Frikik() && siraBende)
+        {
+            btnStart.gameObject.SetActive(false);
+            btnDuranTop.gameObject.SetActive(true);
+        }         
     }
+
+    bool FrikikGolMu()
+    {
+        return saliseBir == 1 && saliseIki == 1 ||
+            saliseBir == 2 && saliseIki == 2 ||
+            saliseBir == 3 && saliseIki == 3 ||
+            saliseBir == 4 && saliseIki == 4 ||
+            saliseBir == 5 && saliseIki == 5 ||
+            saliseBir == 6 && saliseIki == 6 ||
+            saliseBir == 7 && saliseIki == 7 ||
+            saliseBir == 8 && saliseIki == 8 ||
+            saliseBir == 9 && saliseIki == 9;
+    }
+
+    public void FrikikVur()
+    {
+        if (!stopwatch.IsRunning)
+        {
+            stopwatch.Start();
+        }
+        else
+        {
+            stopwatch.Stop();
+            if (FrikikGolMu())
+            {
+                if (siraBende)
+                {
+                    skor1++;
+                    tskor1.text = skor1.ToString();
+                }
+                else
+                {
+                    skor2++;
+                    tskor2.text = skor2.ToString();
+                }
+            }
+
+            btnStart.gameObject.SetActive(true);
+            btnDuranTop.gameObject.SetActive(false);
+            
+            // Sırayı Devret
+            if (siraBende)
+            {
+               
+                siraGosterici.transform.position += vector2;
+                btnStart.enabled = false;
+                siraBende = false;
+                StartCoroutine(BilgisayariOynat());
+            }
+           
+        }
+    }
+
 }
+
