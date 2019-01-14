@@ -5,7 +5,19 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/MainMenu.unity
+    guid: 59993a6f3ab76d14693a9ee8f5a1183e
+  - enabled: 1
+    path: Assets/Scenes/ChooseYourTeam.unity
+    guid: 99ce214b66f477e4b91d5e004d85189b
+  - enabled: 1
+    path: Assets/Scenes/Matches.unity
+    guid: f9e4e6e7f0e59d842b81208d7bf8dd75
+  - enabled: 1
+    path: Assets/Scenes/TimeMatch.unity
+    guid: 3b29abdc4555cda42848fb54a59527e3
   m_configObjects: {}
