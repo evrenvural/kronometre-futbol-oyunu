@@ -16,7 +16,7 @@ public class Kontrol : MonoBehaviour
     public Text tskor1, tskor2;
 
     int saniyeBir=0, saniyeIki=0, saliseBir=0, saliseIki=0;
-    int skor1=0, skor2=0;
+    static public int skor1=0, skor2=0;
     bool siraBende = true;
 
     TimeSpan ts;
