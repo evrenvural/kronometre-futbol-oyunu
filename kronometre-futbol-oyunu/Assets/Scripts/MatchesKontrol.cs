@@ -20,7 +20,7 @@ public class MatchesKontrol : MonoBehaviour
         
         IlkDegerAta();
         DefaultTakimlariGir();
-        //TakimlariKar(takimSayisi);
+        TakimlariKar(takimSayisi);
         DiziyiTextlereAta();
         
     }
@@ -102,13 +102,33 @@ public class MatchesKontrol : MonoBehaviour
     {
         string[] arrayTemp = new string[takimSayisi/2];
         
-            int sayac = 0;
-            for (int i = 0; i < takimSayisi; i+=2)
+        int sayac = 0;
+        string temp="";
+
+        for (int i = 0; i < takimSayisi; i+=2)
             {
-                int rndmSayi = Random.Range(0, 2);
-                string temp = takimIsimleri[i + rndmSayi];
+                if (takimIsimleri[i]==PlayerPrefs.GetString("secilenTakim") || takimIsimleri[i+1] == PlayerPrefs.GetString("secilenTakim"))
+                    {
+                        if (takimIsimleri[i] == PlayerPrefs.GetString("secilenTakim"))
+                            {
+                                temp = takimIsimleri[i];
+                            }
+                        else
+                            {
+                                temp = takimIsimleri[i + 1];
+                            }
+                    }
+
+                else
+                 {
+                    int rndmSayi = Random.Range(0, 2);
+                    temp = takimIsimleri[i + rndmSayi];
+               
+                 }
+
                 arrayTemp[sayac] = temp;
                 sayac++;
+
             }
             //Geçici diziyi asıl diziye ata.
             for (int i = 0; i < takimSayisi/2; i++)
