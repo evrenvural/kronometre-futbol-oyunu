@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TeamsKontrol : MonoBehaviour
@@ -16,9 +17,11 @@ public class TeamsKontrol : MonoBehaviour
     public int kactaBiter;
     void Start()
     {
+        kontrol = obje.GetComponent<Kontrol>();
+
         team[0].text = PlayerPrefs.GetString("secilenTakim");
         team[1].text = PlayerPrefs.GetString("rakipTakim");
-        kontrol = obje.GetComponent<Kontrol>();
+        
     }
 
     // Update is called once per frame
@@ -42,5 +45,12 @@ public class TeamsKontrol : MonoBehaviour
             btnContinue.gameObject.SetActive(true);
             kontrol.enabled = false;
         }
+    }
+
+    public void Continue(int sayi)
+    {
+        SceneManager.LoadScene(sayi);
+        int takimSayisi = PlayerPrefs.GetInt("takimSayisi");
+        PlayerPrefs.SetInt("takimSayisi", takimSayisi / 2);
     }
 }

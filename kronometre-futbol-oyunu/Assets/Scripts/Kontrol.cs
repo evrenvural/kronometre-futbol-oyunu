@@ -25,6 +25,8 @@ public class Kontrol : MonoBehaviour
 
     void Start()
     {
+        skor1 = 0;
+        skor2 = 0;
         stopwatch = new Stopwatch();
         vector2 = new Vector3(352.0f, 0,0);
     }
