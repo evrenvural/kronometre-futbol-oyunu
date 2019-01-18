@@ -14,6 +14,7 @@ public class Kontrol : MonoBehaviour
     public Button btnStart, btnDuranTop, btnPenalti;
     public Image siraGosterici;
     public Text tskor1, tskor2;
+    public float x;
 
     int saniyeBir=0, saniyeIki=0, saliseBir=0, saliseIki=0;
     static public int skor1=0, skor2=0;
@@ -28,7 +29,7 @@ public class Kontrol : MonoBehaviour
         skor1 = 0;
         skor2 = 0;
         stopwatch = new Stopwatch();
-        vector2 = new Vector3(352.0f, 0,0);
+        vector2 = new Vector3(x, 0,0);
     }
 
     // Update is called once per frame
@@ -36,7 +37,7 @@ public class Kontrol : MonoBehaviour
     {
         
         KronometreKontrol();
-  }
+    }
    
     // Değerler hesaplanır ve imagelara gönderilir.
     void KronometreKontrol()
@@ -170,8 +171,7 @@ public class Kontrol : MonoBehaviour
             saliseBir == 5 && saliseIki == 5 ||
             saliseBir == 6 && saliseIki == 6 ||
             saliseBir == 7 && saliseIki == 7 ||
-            saliseBir == 8 && saliseIki == 8 ||
-            saliseBir == 9 && saliseIki == 9;
+            saliseBir == 8 && saliseIki == 8;
     }
 
     void KuralKontrol()
