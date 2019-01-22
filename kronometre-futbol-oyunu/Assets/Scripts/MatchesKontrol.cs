@@ -40,22 +40,22 @@ public class MatchesKontrol : MonoBehaviour
     {
         if (takimSayisi==16)
         {
-            takimIsimleri[0] = "Galatasaray";
-            takimIsimleri[1] = "Barcelona";
-            takimIsimleri[2] = "Real Madrid";
-            takimIsimleri[3] = "Arsenal";
-            takimIsimleri[4] = "Liverpool";
-            takimIsimleri[5] = "Man Utd";
-            takimIsimleri[6] = "Monaco";
-            takimIsimleri[7] = "Beşiktaş";
-            takimIsimleri[8] = "Milan";
-            takimIsimleri[9] = "Juventus";
-            takimIsimleri[10] = "Fenerbahçe";
-            takimIsimleri[11] = "Atletico Madrid";
-            takimIsimleri[12] = "Ajax";
-            takimIsimleri[13] = "Celtic";
-            takimIsimleri[14] = "Villareal";
-            takimIsimleri[15] = "Benfica";
+            takimIsimleri[0] = "GALATASARAY";
+            takimIsimleri[1] = "BARCELONA";
+            takimIsimleri[2] = "REAL MADRID";
+            takimIsimleri[3] = "ARSENAL";
+            takimIsimleri[4] = "LIVERPOOL";
+            takimIsimleri[5] = "MAN UTD";
+            takimIsimleri[6] = "MONACO";
+            takimIsimleri[7] = "PSG";
+            takimIsimleri[8] = "MILAN";
+            takimIsimleri[9] = "JUVENTUS";
+            takimIsimleri[10] = "PORTO";
+            takimIsimleri[11] = "ATLETICO MADRID";
+            takimIsimleri[12] = "AJAX";
+            takimIsimleri[13] = "CELTIC";
+            takimIsimleri[14] = "VILLAREAL";
+            takimIsimleri[15] = "BENFICA";
         }
         else if (takimSayisi==8)
         {

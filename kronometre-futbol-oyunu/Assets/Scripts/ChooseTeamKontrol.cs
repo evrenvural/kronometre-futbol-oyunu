@@ -9,8 +9,11 @@ public class ChooseTeamKontrol : MonoBehaviour
     GameObject btnTeam;
     public Text secilenTakim;
     Text text;
+    public Button btnContinue;
+
     public void Choose(int sayi)
     {
+        btnContinue.gameObject.SetActive(true);
         switch (sayi)
         {
             case 1:

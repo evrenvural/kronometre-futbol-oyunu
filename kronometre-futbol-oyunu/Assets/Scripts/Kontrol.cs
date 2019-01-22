@@ -10,11 +10,12 @@ using Random = UnityEngine.Random;
 public class Kontrol : MonoBehaviour
 {
     public Image[] image;
+    public Sprite[] spriteStart;
     public Sprite[] sayilar;
     public Button btnStart, btnDuranTop, btnPenalti;
     public Image siraGosterici;
     public Text tskor1, tskor2;
-    public float x;
+    public float y;
 
     int saniyeBir=0, saniyeIki=0, saliseBir=0, saliseIki=0;
     static public int skor1=0, skor2=0;
@@ -23,13 +24,17 @@ public class Kontrol : MonoBehaviour
     TimeSpan ts;
     Stopwatch stopwatch;
     Vector3 vector2;
+    Image imgButtonStart, imgButtonDuranTop, imgButtonPenalti;
 
     void Start()
     {
+        imgButtonStart = btnStart.GetComponent<Image>();
+        imgButtonDuranTop = btnDuranTop.GetComponent<Image>();
+        imgButtonPenalti = btnPenalti.GetComponent<Image>();
         skor1 = 0;
         skor2 = 0;
         stopwatch = new Stopwatch();
-        vector2 = new Vector3(x, 0,0);
+        vector2 = new Vector3(0, y,0);
     }
 
     // Update is called once per frame
@@ -37,8 +42,10 @@ public class Kontrol : MonoBehaviour
     {
         
         KronometreKontrol();
+        
     }
-   
+    
+
     // Değerler hesaplanır ve imagelara gönderilir.
     void KronometreKontrol()
     {
@@ -98,15 +105,17 @@ public class Kontrol : MonoBehaviour
     {
         if (!stopwatch.IsRunning)
         {
+            imgButtonStart.sprite = spriteStart[1];
             stopwatch.Start();
         }
         else // Sıra Bende
         {
+            imgButtonStart.sprite = spriteStart[0];
             stopwatch.Stop();
             KuralKontrol();
             if (!Frikik() && !Penalti())//Penaltı gelecek
             {
-                siraGosterici.transform.position += vector2;
+                siraGosterici.transform.position -= vector2;
                 btnStart.enabled = false;
                 siraBende = false;
                 StartCoroutine(BilgisayariOynat());
@@ -116,7 +125,7 @@ public class Kontrol : MonoBehaviour
 
     IEnumerator BilgisayariOynat()
     {
-        
+        imgButtonStart.sprite = spriteStart[2];
         yield return new WaitForSeconds(1);
         stopwatch.Start();
         int zaman = Random.Range(1, 4);
@@ -139,10 +148,10 @@ public class Kontrol : MonoBehaviour
             yield return new WaitForSeconds(zaman);
             PenaltiVur();
         }
-        siraGosterici.transform.position -= vector2;
+        siraGosterici.transform.position += vector2;
         siraBende = true;
         btnStart.enabled = true;
-            
+        imgButtonStart.sprite = spriteStart[0];    
     }
 
     bool Gol()
@@ -221,6 +230,7 @@ public class Kontrol : MonoBehaviour
 
     public void PenaltiVur()
     {
+        imgButtonPenalti.sprite = spriteStart[1];
         if (!stopwatch.IsRunning)
         {
             stopwatch.Start();
@@ -241,7 +251,7 @@ public class Kontrol : MonoBehaviour
                     tskor2.text = skor2.ToString();
                 }
             }
-
+            imgButtonPenalti.sprite = spriteStart[0];
             btnStart.gameObject.SetActive(true);
             btnPenalti.gameObject.SetActive(false);
 
@@ -249,7 +259,8 @@ public class Kontrol : MonoBehaviour
             if (siraBende)
             {
 
-                siraGosterici.transform.position += vector2;
+                siraGosterici.transform.position -= vector2;
+                
                 btnStart.enabled = false;
                 siraBende = false;
                 StartCoroutine(BilgisayariOynat());
@@ -259,6 +270,7 @@ public class Kontrol : MonoBehaviour
     }
     public void FrikikVur()
     {
+        imgButtonDuranTop.sprite = spriteStart[1];
         if (!stopwatch.IsRunning)
         {
             stopwatch.Start();
@@ -279,15 +291,15 @@ public class Kontrol : MonoBehaviour
                     tskor2.text = skor2.ToString();
                 }
             }
-
+            imgButtonDuranTop.sprite = spriteStart[0];
             btnStart.gameObject.SetActive(true);
             btnDuranTop.gameObject.SetActive(false);
             
             // Sırayı Devret
             if (siraBende)
             {
-               
-                siraGosterici.transform.position += vector2;
+                
+                siraGosterici.transform.position -= vector2;
                 btnStart.enabled = false;
                 siraBende = false;
                 StartCoroutine(BilgisayariOynat());
