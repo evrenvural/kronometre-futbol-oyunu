@@ -15,36 +15,48 @@ public class Kontrol : MonoBehaviour
     public Button btnStart, btnDuranTop, btnPenalti;
     public Image siraGosterici;
     public Text tskor1, tskor2;
+    public Text textSpiker;
     public float y;
+    public GameObject objeSpiker;
+    
+    
 
     int saniyeBir=0, saniyeIki=0, saliseBir=0, saliseIki=0;
     static public int skor1=0, skor2=0;
+    string evSahibi, deplasman;
     bool siraBende = true;
-
+    bool frikikVuruldu = false, penaltiVuruldu = false;
+    
+    
     TimeSpan ts;
     Stopwatch stopwatch;
     Vector3 vector2;
     Image imgButtonStart, imgButtonDuranTop, imgButtonPenalti;
+    Spiker spiker;
+    
 
     void Start()
     {
+       
         imgButtonStart = btnStart.GetComponent<Image>();
         imgButtonDuranTop = btnDuranTop.GetComponent<Image>();
         imgButtonPenalti = btnPenalti.GetComponent<Image>();
+        evSahibi = PlayerPrefs.GetString("secilenTakim");
+        deplasman = PlayerPrefs.GetString("rakipTakim");
         skor1 = 0;
         skor2 = 0;
         stopwatch = new Stopwatch();
         vector2 = new Vector3(0, y,0);
+        spiker = objeSpiker.GetComponent<Spiker>();
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         
         KronometreKontrol();
         
     }
-    
 
     // Değerler hesaplanır ve imagelara gönderilir.
     void KronometreKontrol()
@@ -105,6 +117,7 @@ public class Kontrol : MonoBehaviour
     {
         if (!stopwatch.IsRunning)
         {
+            textSpiker.text = evSahibi + spiker.Atak(); //spiker
             imgButtonStart.sprite = spriteStart[1];
             stopwatch.Start();
         }
@@ -113,12 +126,19 @@ public class Kontrol : MonoBehaviour
             imgButtonStart.sprite = spriteStart[0];
             stopwatch.Stop();
             KuralKontrol();
-            if (!Frikik() && !Penalti())//Penaltı gelecek
+            if (!Frikik() && !Penalti())
             {
+                if (!Gol())
+                {
+                    textSpiker.text = spiker.Kaptiriyor();//SPİKER
+                }
                 siraGosterici.transform.position -= vector2;
                 btnStart.enabled = false;
                 siraBende = false;
-                StartCoroutine(BilgisayariOynat());
+                if (!macBittiMi())
+                {
+                    StartCoroutine(BilgisayariOynat());
+                }
             }
         }
     }
@@ -126,32 +146,48 @@ public class Kontrol : MonoBehaviour
     IEnumerator BilgisayariOynat()
     {
         imgButtonStart.sprite = spriteStart[2];
-        yield return new WaitForSeconds(1);
-        stopwatch.Start();
-        int zaman = Random.Range(1, 4);
-        yield return new WaitForSeconds(zaman);
-        stopwatch.Stop();
-        KuralKontrol();
-        if (Frikik())
-        {
             yield return new WaitForSeconds(1);
-            FrikikVur();
-            zaman = Random.Range(1, 4);
+            textSpiker.text = deplasman + spiker.Atak(); //Spiker
+            stopwatch.Start();
+            int zaman = Random.Range(1, 4);
             yield return new WaitForSeconds(zaman);
-            FrikikVur();
-        }
-        if (Penalti())
-        {
-            yield return new WaitForSeconds(1);
-            PenaltiVur();
-            zaman = Random.Range(1, 4);
-            yield return new WaitForSeconds(zaman);
-            PenaltiVur();
-        }
-        siraGosterici.transform.position += vector2;
-        siraBende = true;
-        btnStart.enabled = true;
-        imgButtonStart.sprite = spriteStart[0];    
+            stopwatch.Stop();
+            KuralKontrol();
+            if (Frikik())
+            {
+                textSpiker.text = spiker.DuranTop(); //Spiker
+                yield return new WaitForSeconds(1);
+                FrikikVur();
+                zaman = Random.Range(1, 4);
+                yield return new WaitForSeconds(zaman);
+                FrikikVur();
+            }
+            if (Penalti())
+            {
+                textSpiker.text = spiker.Penalti(); //Spiker
+                yield return new WaitForSeconds(1);
+                PenaltiVur();
+                zaman = Random.Range(1, 4);
+                yield return new WaitForSeconds(zaman);
+                PenaltiVur();
+            }
+            siraGosterici.transform.position += vector2;
+            siraBende = true;
+            btnStart.enabled = true;
+            imgButtonStart.sprite = spriteStart[0];
+            if (!Penalti() && !Frikik() && !Gol())
+            {
+                if (!frikikVuruldu && !penaltiVuruldu)
+                {
+                    textSpiker.text = spiker.Kaptiriyor(); // SPiker
+
+                }
+            }
+            frikikVuruldu = false;
+            penaltiVuruldu = false;
+            UnityEngine.Debug.Log("Girdik");
+     
+        
     }
 
     bool Gol()
@@ -187,6 +223,7 @@ public class Kontrol : MonoBehaviour
     {
         if (Gol())
         {
+            textSpiker.text = spiker.Gol(); // Spiker
             if (siraBende) 
             {
                 skor1++;
@@ -200,11 +237,13 @@ public class Kontrol : MonoBehaviour
         }
         if (Frikik() && siraBende)
         {
+            textSpiker.text = evSahibi + spiker.DuranTop(); //Spiker
             btnStart.gameObject.SetActive(false);
             btnDuranTop.gameObject.SetActive(true);
         }
         if (Penalti() && siraBende)
         {
+            textSpiker.text = spiker.Penalti(); //Spiker
             btnStart.gameObject.SetActive(false);
             btnPenalti.gameObject.SetActive(true);
         }
@@ -234,12 +273,14 @@ public class Kontrol : MonoBehaviour
         if (!stopwatch.IsRunning)
         {
             stopwatch.Start();
+            textSpiker.text = spiker.DuranTopVur(); //Spiker
         }
         else
         {
             stopwatch.Stop();
             if (PenaltiGolMu())
             {
+                textSpiker.text = spiker.Gol(); //Spiker
                 if (siraBende)
                 {
                     skor1++;
@@ -250,6 +291,10 @@ public class Kontrol : MonoBehaviour
                     skor2++;
                     tskor2.text = skor2.ToString();
                 }
+            }
+            else
+            {
+                textSpiker.text = spiker.DuranTopKacirdi(); // Spiker
             }
             imgButtonPenalti.sprite = spriteStart[0];
             btnStart.gameObject.SetActive(true);
@@ -263,7 +308,14 @@ public class Kontrol : MonoBehaviour
                 
                 btnStart.enabled = false;
                 siraBende = false;
-                StartCoroutine(BilgisayariOynat());
+                if (!macBittiMi())
+                {
+                    StartCoroutine(BilgisayariOynat());
+                }
+            }
+            else
+            {
+                penaltiVuruldu = false;
             }
 
         }
@@ -273,6 +325,7 @@ public class Kontrol : MonoBehaviour
         imgButtonDuranTop.sprite = spriteStart[1];
         if (!stopwatch.IsRunning)
         {
+            textSpiker.text = spiker.DuranTopVur(); // Spiker
             stopwatch.Start();
         }
         else
@@ -280,6 +333,7 @@ public class Kontrol : MonoBehaviour
             stopwatch.Stop();
             if (FrikikGolMu())
             {
+                textSpiker.text = spiker.Gol(); // Spiker
                 if (siraBende)
                 {
                     skor1++;
@@ -290,6 +344,10 @@ public class Kontrol : MonoBehaviour
                     skor2++;
                     tskor2.text = skor2.ToString();
                 }
+            }
+            else
+            {
+                textSpiker.text = spiker.DuranTopKacirdi(); // Spiker
             }
             imgButtonDuranTop.sprite = spriteStart[0];
             btnStart.gameObject.SetActive(true);
@@ -302,10 +360,22 @@ public class Kontrol : MonoBehaviour
                 siraGosterici.transform.position -= vector2;
                 btnStart.enabled = false;
                 siraBende = false;
-                StartCoroutine(BilgisayariOynat());
+                if (!macBittiMi())
+                {
+                    StartCoroutine(BilgisayariOynat());
+                }
+            }
+            else
+            {
+                frikikVuruldu = false;
             }
            
         }
+    }
+
+    bool macBittiMi()
+    {
+        return skor1 >= 1 || skor2 >= 1; //KACTA BİTER
     }
 
 }

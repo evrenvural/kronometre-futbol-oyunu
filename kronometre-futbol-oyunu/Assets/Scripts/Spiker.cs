@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class Spiker : MonoBehaviour
 {
-    private string[] atak, duranTop, penalti, gol, duranTopVur, duranTopKacirdi, macBitti;
+    private string[] atak, duranTop, penalti, gol, duranTopVur, duranTopKacirdi, macBitti, macBaslayacak, kaptiriyor;
     int random;
    
     void Start()
@@ -24,7 +24,7 @@ public class Spiker : MonoBehaviour
         penalti[1] = "Aman allahım penaltııı";
         gol = new string[3];
         gol[0] = "goooool allahım goooool";
-        gol[1] = "uzak noktadan mükemmel bir şut harika bir gol";
+        gol[1] = "uzak noktadan mükemmel bir şut harika bir gol"; // just gol pls
         gol[2] = "Ben bu gole içerim harikaa bir goool";
         duranTopVur = new string[2];
         duranTopVur[0] = "şuuuuuttt";
@@ -35,7 +35,15 @@ public class Spiker : MonoBehaviour
         macBitti = new string[3];
         macBitti[0] = "ve maç bitiyor maçın galibi ";
         macBitti[1] = "zor maçı kazanan ";
-        macBitti[2] = "ne maçtı ama";
+        macBitti[2] = "ne maçtı ama hak eden taraf ";
+        macBaslayacak = new string[3];
+        macBaslayacak[0] = "futbol adına mükemmel bir gün";
+        macBaslayacak[1] = "Merhaba sayın seyirciler güzel gün ama değil mi";
+        macBaslayacak[2] = "Bendeniz mesut süree";
+        kaptiriyor = new string[3];
+        kaptiriyor[0] = "topu kaptırıyor.";
+        kaptiriyor[1] = "önemli bir atak başlamadan bitiyor";
+        kaptiriyor[2] = "olmuyor";
     }
 
     public string Atak()
@@ -72,5 +80,15 @@ public class Spiker : MonoBehaviour
     {
         random = Random.Range(0, 3);
         return macBitti[random];
+    }
+    public string MacBaslayacak()
+    {
+        random = Random.Range(0, 3);
+        return macBaslayacak[random];
+    }
+    public string Kaptiriyor()
+    {
+        random = Random.Range(0, 3);
+        return kaptiriyor[random];
     }
 }
