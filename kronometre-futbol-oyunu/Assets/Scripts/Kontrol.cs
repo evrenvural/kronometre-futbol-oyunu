@@ -66,7 +66,7 @@ public class Kontrol : MonoBehaviour
             ts = stopwatch.Elapsed;
             saniyeBir = ts.Seconds % 10;
             saniyeIki = ts.Seconds / 10;
-            saliseBir = ts.Milliseconds & 10;
+            saliseBir = ts.Milliseconds % 10;
             saliseIki = ts.Milliseconds / 100;
             SayilaraGoreImageAta(saliseBir, image[0]);
             SayilaraGoreImageAta(saliseIki, image[1]);
