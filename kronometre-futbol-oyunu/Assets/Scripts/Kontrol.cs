@@ -162,7 +162,7 @@ public class Kontrol : MonoBehaviour
                 yield return new WaitForSeconds(zaman);
                 FrikikVur();
             }
-            if (Penalti())
+            if (Penalti() && !frikikVuruldu)
             {
                 textSpiker.text = spiker.Penalti(); //Spiker
                 yield return new WaitForSeconds(1);
@@ -185,7 +185,6 @@ public class Kontrol : MonoBehaviour
             }
             frikikVuruldu = false;
             penaltiVuruldu = false;
-            UnityEngine.Debug.Log("Girdik");
      
         
     }
@@ -315,7 +314,7 @@ public class Kontrol : MonoBehaviour
             }
             else
             {
-                penaltiVuruldu = false;
+                penaltiVuruldu = true;
             }
 
         }
@@ -367,7 +366,7 @@ public class Kontrol : MonoBehaviour
             }
             else
             {
-                frikikVuruldu = false;
+                frikikVuruldu = true;
             }
            
         }
