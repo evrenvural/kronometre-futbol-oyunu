@@ -64,11 +64,33 @@ public class TeamsKontrol : MonoBehaviour
         }
     }
 
-    public void Continue(int sayi)
+    bool MacKazanildiMi()
     {
-        SceneManager.LoadScene(sayi);
+        return skor1 > skor2;
+    }
+
+    public void Continue(int ileri)
+    {
         int takimSayisi = PlayerPrefs.GetInt("takimSayisi");
         PlayerPrefs.SetInt("takimSayisi", takimSayisi / 2);
+
+        if (MacKazanildiMi() && takimSayisi/2 != 1)
+        {
+            PlayerPrefs.SetInt("macKazanildiMi", 1);
+            SceneManager.LoadScene(ileri);
+        }
+        else
+        {
+            if (MacKazanildiMi())
+            {
+                PlayerPrefs.SetInt("macKazanildiMi", 0);
+            }
+            else
+            {
+                PlayerPrefs.SetInt("macKazanildiMi", 1);
+            }
+            SceneManager.LoadScene(4);
+        }
     }
 
     IEnumerator macBittiSpiker()
