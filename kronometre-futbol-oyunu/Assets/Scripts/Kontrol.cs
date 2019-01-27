@@ -387,7 +387,7 @@ public class Kontrol : MonoBehaviour
 
     bool macBittiMi()
     {
-        return skor1 >= 1 || skor2 >= 1; //KACTA BİTER
+        return skor1 >= 3 || skor2 >= 3; //KACTA BİTER
     }
 
 }

@@ -14,13 +14,22 @@ public class SesVeBilgi : MonoBehaviour
     bool panelAcikMi=false;
     bool panelYazisiIlkEkran = true;
     AudioSource ses;
-    
+
+    int ilkOynanisKontrol = 0;
 
     void Start()
     {
         BGSoundScript.Instance.gameObject.GetComponent<AudioSource>().Stop();
         ses = GetComponent<AudioSource>();
         SesKontrol();
+        ilkOynanisKontrol += PlayerPrefs.GetInt("ilkOynanis");
+        if (ilkOynanisKontrol == 0)
+        {
+           panel.SetActive(true);
+           panelAcikMi = true;
+          
+            PlayerPrefs.SetInt("ilkOynanis", 1);
+        }
     }
 
     void SesKontrol()
