@@ -8,9 +8,56 @@ public class SesVeBilgi : MonoBehaviour
     public GameObject panel;
     public Text textBir, textIki;
     public Button butonBir, butonIki, gotit;
+    public Image imgSes;
+    public Sprite[] sprtSes;
 
     bool panelAcikMi=false;
     bool panelYazisiIlkEkran = true;
+    AudioSource ses;
+    
+
+    void Start()
+    {
+        BGSoundScript.Instance.gameObject.GetComponent<AudioSource>().Stop();
+        ses = GetComponent<AudioSource>();
+        SesKontrol();
+    }
+
+    void SesKontrol()
+    {
+        if (!MainMenuKontrol.acik) //Kapa
+        {
+            BGSoundScript.Instance.gameObject.GetComponent<AudioSource>().volume = 0;
+            MainMenuKontrol.acik = false;
+            imgSes.sprite = sprtSes[1];
+            ses.volume = 0;
+        }
+        else //AC
+        {
+            BGSoundScript.Instance.gameObject.GetComponent<AudioSource>().volume = 0.5f;
+            MainMenuKontrol.acik = true;
+            imgSes.sprite = sprtSes[0];
+            ses.volume = 1;
+        }
+    }
+
+    public void SesAcKapa()
+    {
+        if (MainMenuKontrol.acik) //Kapa
+        {
+            BGSoundScript.Instance.gameObject.GetComponent<AudioSource>().volume = 0;
+            MainMenuKontrol.acik = false;
+            imgSes.sprite = sprtSes[1];
+            ses.volume = 0;
+        }
+        else //AC
+        {
+            BGSoundScript.Instance.gameObject.GetComponent<AudioSource>().volume = 0.5f;
+            MainMenuKontrol.acik = true;
+            imgSes.sprite = sprtSes[0];
+            ses.volume = 1;
+        }
+    }
 
     public void OpenPanel()
     {

@@ -16,8 +16,10 @@ public class Kontrol : MonoBehaviour
     public Image siraGosterici;
     public Text tskor1, tskor2;
     public Text textSpiker;
-    public float y;
+    float y;
     public GameObject objeSpiker;
+    public GameObject team1, team2;
+    public GameObject SesVeBilgi;
     
     
 
@@ -33,11 +35,14 @@ public class Kontrol : MonoBehaviour
     Vector3 vector2;
     Image imgButtonStart, imgButtonDuranTop, imgButtonPenalti;
     Spiker spiker;
+    AudioSource sesKaynak;
+    public AudioClip[] sesler;
     
 
     void Start()
     {
-       
+
+        sesKaynak = SesVeBilgi.GetComponent<AudioSource>();
         imgButtonStart = btnStart.GetComponent<Image>();
         imgButtonDuranTop = btnDuranTop.GetComponent<Image>();
         imgButtonPenalti = btnPenalti.GetComponent<Image>();
@@ -46,6 +51,7 @@ public class Kontrol : MonoBehaviour
         skor1 = 0;
         skor2 = 0;
         stopwatch = new Stopwatch();
+        y = (team2.transform.position.y - team1.transform.position.y)*-1;
         vector2 = new Vector3(0, y,0);
         spiker = objeSpiker.GetComponent<Spiker>();
     }
@@ -155,6 +161,7 @@ public class Kontrol : MonoBehaviour
             KuralKontrol();
             if (Frikik())
             {
+            sesKaynak.PlayOneShot(sesler[1],1);
                 textSpiker.text = spiker.DuranTop(); //Spiker
                 yield return new WaitForSeconds(1);
                 FrikikVur();
@@ -164,7 +171,8 @@ public class Kontrol : MonoBehaviour
             }
             if (Penalti() && !frikikVuruldu)
             {
-                textSpiker.text = spiker.Penalti(); //Spiker
+            sesKaynak.PlayOneShot(sesler[1], 1);
+            textSpiker.text = spiker.Penalti(); //Spiker
                 yield return new WaitForSeconds(1);
                 PenaltiVur();
                 zaman = Random.Range(1, 4);
@@ -222,6 +230,7 @@ public class Kontrol : MonoBehaviour
     {
         if (Gol())
         {
+            sesKaynak.PlayOneShot(sesler[0], 1);
             textSpiker.text = spiker.Gol(); // Spiker
             if (siraBende) 
             {
@@ -236,12 +245,14 @@ public class Kontrol : MonoBehaviour
         }
         if (Frikik() && siraBende)
         {
+            sesKaynak.PlayOneShot(sesler[1], 1);
             textSpiker.text = evSahibi + spiker.DuranTop(); //Spiker
             btnStart.gameObject.SetActive(false);
             btnDuranTop.gameObject.SetActive(true);
         }
         if (Penalti() && siraBende)
         {
+            sesKaynak.PlayOneShot(sesler[1], 1);
             textSpiker.text = spiker.Penalti(); //Spiker
             btnStart.gameObject.SetActive(false);
             btnPenalti.gameObject.SetActive(true);
@@ -279,6 +290,7 @@ public class Kontrol : MonoBehaviour
             stopwatch.Stop();
             if (PenaltiGolMu())
             {
+                sesKaynak.PlayOneShot(sesler[0], 1);
                 textSpiker.text = spiker.Gol(); //Spiker
                 if (siraBende)
                 {
@@ -332,6 +344,7 @@ public class Kontrol : MonoBehaviour
             stopwatch.Stop();
             if (FrikikGolMu())
             {
+                sesKaynak.PlayOneShot(sesler[0], 1);
                 textSpiker.text = spiker.Gol(); // Spiker
                 if (siraBende)
                 {

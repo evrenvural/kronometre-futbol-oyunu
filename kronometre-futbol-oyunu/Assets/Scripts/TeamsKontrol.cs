@@ -71,21 +71,21 @@ public class TeamsKontrol : MonoBehaviour
 
     public void Continue(int ileri)
     {
+        BGSoundScript.Instance.gameObject.GetComponent<AudioSource>().Play();
         int takimSayisi = PlayerPrefs.GetInt("takimSayisi");
         PlayerPrefs.SetInt("takimSayisi", takimSayisi / 2);
 
-        if (MacKazanildiMi() && takimSayisi/2 != 1)
+        if (MacKazanildiMi() && takimSayisi/2 != 1) // Kazandın İleri
         {
-            PlayerPrefs.SetInt("macKazanildiMi", 1);
             SceneManager.LoadScene(ileri);
         }
-        else
+        else // Son Maç ya da elendin
         {
-            if (MacKazanildiMi())
+            if (MacKazanildiMi())//kazandın
             {
                 PlayerPrefs.SetInt("macKazanildiMi", 0);
             }
-            else
+            else//elendin
             {
                 PlayerPrefs.SetInt("macKazanildiMi", 1);
             }
