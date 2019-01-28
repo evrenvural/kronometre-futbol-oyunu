@@ -13,37 +13,37 @@ public class Spiker : MonoBehaviour
     void Start()
     {
         atak = new string[3];
-        atak[0] = " sağ taraftan atağa çıkıyor";
-        atak[1] = " sol taraftan atağa çıkıyor";
-        atak[2] = " orta sahadan atağa çıkıyor";
+        atak[0] = " IS ATTACKING FROM THE RIGHT";
+        atak[1] = " IS PLAYING EFFECTIVE";
+        atak[2] = " IS ATTACKING FROM THE LEFT";
         duranTop = new string[2];
-        duranTop[0] = " tehlikeli yerden frikik kazanıyor";
-        duranTop[1] = " uzak noktadan frikik kazanıyor";
+        duranTop[0] = "FREEKICK...";
+        duranTop[1] = "OH.. TOO HARD FOUL";
         penalti = new string[2];
-        penalti[0] = "penaltı.... Bunun adı pe nal tıı";
-        penalti[1] = "Aman allahım penaltııı";
+        penalti[0] = "PENALTY... PE NAL TY";
+        penalti[1] = "REFEREE'S POINTING AT WHITE POINT";
         gol = new string[3];
-        gol[0] = "goooool allahım goooool";
-        gol[1] = "uzak noktadan mükemmel bir şut harika bir gol"; // just gol pls
-        gol[2] = "Ben bu gole içerim harikaa bir goool";
+        gol[0] = "GOAAAAALLLLLLLLLL";
+        gol[1] = "EXCELLENT SHOT AND PERFECT GOAL"; 
+        gol[2] = "WHAT A GOAL";
         duranTopVur = new string[2];
-        duranTopVur[0] = "şuuuuuttt";
-        duranTopVur[1] = "bir şuuuuut";
+        duranTopVur[0] = "SHOOOOOOTT";
+        duranTopVur[1] = "SHOOOT";
         duranTopKacirdi = new string[2];
-        duranTopKacirdi[0] = "top dışarda";
-        duranTopKacirdi[1] = "nasıl kaçar aman allahım";
+        duranTopKacirdi[0] = "TOO WEAK SHOT";
+        duranTopKacirdi[1] = "MISSED...";
         macBitti = new string[3];
-        macBitti[0] = "ve maç bitiyor maçın galibi ";
-        macBitti[1] = "zor maçı kazanan ";
-        macBitti[2] = "ne maçtı ama hak eden taraf ";
+        macBitti[0] = "AND THE MATCH ENDS. WINNING TEAM IS ";
+        macBitti[1] = "THE WINNER OF THE DIFFICULT MATCH IS ";
+        macBitti[2] = "AWESOME GAME FROM ";
         macBaslayacak = new string[3];
-        macBaslayacak[0] = "futbol adına mükemmel bir gün";
-        macBaslayacak[1] = "Merhaba sayın seyirciler güzel gün ama değil mi";
-        macBaslayacak[2] = "Bendeniz mesut süree";
+        macBaslayacak[0] = "WE ARE TOGETHER FOR AWESOME THE MATCH";
+        macBaslayacak[1] = "HAVE A PERFECT WEATHER TODAY FOR FOOTBALL";
+        macBaslayacak[2] = "REFEREE'S CHECKING HIS WATCH";
         kaptiriyor = new string[3];
-        kaptiriyor[0] = "topu kaptırıyor.";
-        kaptiriyor[1] = "önemli bir atak başlamadan bitiyor";
-        kaptiriyor[2] = "olmuyor";
+        kaptiriyor[0] = "DEFENCE IS DOING A GOOD JOB TONIGHT";
+        kaptiriyor[1] = "AND.. OUT";
+        kaptiriyor[2] = "BALL LOSS";
     }
 
     public string Atak()

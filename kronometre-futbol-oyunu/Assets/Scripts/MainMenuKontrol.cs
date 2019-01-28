@@ -11,6 +11,7 @@ public class MainMenuKontrol : MonoBehaviour
     public static bool acik = true;
     public Sprite[] sprtSes;
     public GameObject goSes;
+    public static bool turnuva;
     Image imgSes;
 
     void Start()
@@ -56,6 +57,18 @@ public class MainMenuKontrol : MonoBehaviour
             BGSoundScript.Instance.gameObject.GetComponent<AudioSource>().volume = 0.5f;
             MainMenuKontrol.acik = true;
             imgSes.sprite = sprtSes[0];
+        }
+    }
+
+    public void ButonBelirle(int sayi)
+    {
+        if (sayi==1)
+        {
+            turnuva = true;
+        }
+        else
+        {
+            turnuva = false;
         }
     }
 }

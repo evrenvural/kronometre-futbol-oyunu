@@ -6,104 +6,102 @@ using UnityEngine.UI;
 
 public class ChooseTeamKontrol : MonoBehaviour
 {
-    GameObject btnTeam;
+    public Button[] btnTeam;
     public Text secilenTakim;
     Text text;
     public Button btnContinue;
+    public static bool ilkGelis = true;
+    public Text title;
+
+    void Start()
+    {
+        TitleYazdir();
+        AyniTakimKontrol();
+    }
+
+    void TitleYazdir()
+    {
+        if (MainMenuKontrol.turnuva)
+        {
+            title.text = "SELECT YOUR TEAM";
+        }
+        else
+        {
+            if (ilkGelis)
+            {
+                title.text = "SELECT THE FIRST PLAYER'S TEAM";
+            }
+            else
+            {
+                title.text = "SELECT THE SECOND PLAYER'S TEAM";
+            }
+        }
+    }
 
     public void Choose(int sayi)
     {
         btnContinue.gameObject.SetActive(true);
-        switch (sayi)
-        {
-            case 1:
-                btnTeam = GameObject.Find("Team1");
-                text = btnTeam.GetComponentInChildren<Text>();
-                secilenTakim.text = text.text;
-                break;
-            case 2:
-                btnTeam = GameObject.Find("Team2");
-                text = btnTeam.GetComponentInChildren<Text>();
-                secilenTakim.text = text.text;
-                break;
-            case 3:
-                btnTeam = GameObject.Find("Team3");
-                text = btnTeam.GetComponentInChildren<Text>();
-                secilenTakim.text = text.text;
-                break;
-            case 4:
-                btnTeam = GameObject.Find("Team4");
-                text = btnTeam.GetComponentInChildren<Text>();
-                secilenTakim.text = text.text;
-                break;
-            case 5:
-                btnTeam = GameObject.Find("Team5");
-                text = btnTeam.GetComponentInChildren<Text>();
-                secilenTakim.text = text.text;
-                break;
-            case 6:
-                btnTeam = GameObject.Find("Team6");
-                text = btnTeam.GetComponentInChildren<Text>();
-                secilenTakim.text = text.text;
-                break;
-            case 7:
-                btnTeam = GameObject.Find("Team7");
-                text = btnTeam.GetComponentInChildren<Text>();
-                secilenTakim.text = text.text;
-                break;
-            case 8:
-                btnTeam = GameObject.Find("Team8");
-                text = btnTeam.GetComponentInChildren<Text>();
-                secilenTakim.text = text.text;
-                break;
-            case 9:
-                btnTeam = GameObject.Find("Team9");
-                text = btnTeam.GetComponentInChildren<Text>();
-                secilenTakim.text = text.text;
-                break;
-            case 10:
-                btnTeam = GameObject.Find("Team10");
-                text = btnTeam.GetComponentInChildren<Text>();
-                secilenTakim.text = text.text;
-                break;
-            case 11:
-                btnTeam = GameObject.Find("Team11");
-                text = btnTeam.GetComponentInChildren<Text>();
-                secilenTakim.text = text.text;
-                break;
-            case 12:
-                btnTeam = GameObject.Find("Team12");
-                text = btnTeam.GetComponentInChildren<Text>();
-                secilenTakim.text = text.text;
-                break;
-            case 13:
-                btnTeam = GameObject.Find("Team13");
-                text = btnTeam.GetComponentInChildren<Text>();
-                secilenTakim.text = text.text;
-                break;
-            case 14:
-                btnTeam = GameObject.Find("Team14");
-                text = btnTeam.GetComponentInChildren<Text>();
-                secilenTakim.text = text.text;
-                break;
-            case 15:
-                btnTeam = GameObject.Find("Team15");
-                text = btnTeam.GetComponentInChildren<Text>();
-                secilenTakim.text = text.text;
-                break;
-            case 16:
-                btnTeam = GameObject.Find("Team16");
-                text = btnTeam.GetComponentInChildren<Text>();
-                secilenTakim.text = text.text;
-                break;
-
-        }
+       
+        text = btnTeam[sayi].GetComponentInChildren<Text>();
+        secilenTakim.text = text.text;
+       
+        PlayerPrefs.SetInt("secilenButonSayi", sayi);
     }
 
     public void Continue(int sahneNumarasi)
     {
-        PlayerPrefs.SetString("secilenTakim",secilenTakim.text.ToString());
-        SceneManager.LoadScene(sahneNumarasi);
+        if (MainMenuKontrol.turnuva)
+        {
+            PlayerPrefs.SetString("secilenTakim", secilenTakim.text.ToString());
+            SceneManager.LoadScene(sahneNumarasi);
+        }
+        else
+        {
+            if (ilkGelis)
+            {
+                PlayerPrefs.SetString("secilenTakim", secilenTakim.text.ToString());
+                SceneManager.LoadScene(1);
+                ilkGelis = false;
+            }
+            else
+            {
+                PlayerPrefs.SetString("rakipTakim", secilenTakim.text.ToString());
+                SceneManager.LoadScene(5);
+                ilkGelis = true;
+            }
+        }
+    }
+
+    void AyniTakimKontrol()
+    {
+        if (!ilkGelis)
+        {
+            int sayi = PlayerPrefs.GetInt("secilenButonSayi");
+
+            btnTeam[sayi].enabled = false;
+           
+        }
+    }
+
+    public void Back()
+    {
+        if (MainMenuKontrol.turnuva)
+        {
+            SceneManager.LoadScene(0);
+        }
+        else
+        {
+            if (ilkGelis)
+            {
+                SceneManager.LoadScene(0);
+            }
+            else
+            {
+                ilkGelis = true;
+
+                SceneManager.LoadScene(1);
+            }
+        }
     }
 
 }
