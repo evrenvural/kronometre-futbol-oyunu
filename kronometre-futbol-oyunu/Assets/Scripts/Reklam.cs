@@ -8,11 +8,12 @@ public class Reklam : MonoBehaviour
 
     static Reklam reklamKontrol;
 
-    public static InterstitialAd interstitial;
+    InterstitialAd interstitial;
 
     void Start()
     {
-       
+
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
         if (reklamKontrol==null)
         {
             DontDestroyOnLoad(gameObject);
@@ -31,24 +32,25 @@ public class Reklam : MonoBehaviour
 
             //2. Asama----------------------------------------------------
             #if UNITY_ANDROID
-            string adUnitId = "ca-app-pub-3940256099942544/1033173712"; //Test
+            //string adUnitId = "ca-app-pub-3940256099942544/1033173712";
+            string adUnitId = "ca-app-pub-2599972005525985/3498240584"; //Test
             #elif UNITY_IPHONE
         string adUnitId = "ca-app-pub-3940256099942544/4411468910";
             #else
         string adUnitId = "unexpected_platform";
             #endif
 
-            Reklam.interstitial = new InterstitialAd(adUnitId);
+            interstitial = new InterstitialAd(adUnitId);
 
             //3. Asama----------------------------------------------------
 
-            //AdRequest request = new AdRequest.Builder().Build(); TEST
+            AdRequest request = new AdRequest.Builder().Build(); 
+  //          AdRequest request = new AdRequest.Builder()
+  //.AddTestDevice(AdRequest.TestDeviceSimulator).AddTestDevice("2077ef9a63d2b398840261c8221a0c9b")
+  //.Build();
 
-            AdRequest request = new AdRequest.Builder()
-      .AddTestDevice("2077ef9a63d2b398840261c8221a0c9b")
-      .Build();
 
-            Reklam.interstitial.LoadAd(request);
+            interstitial.LoadAd(request);
 
             //4. Asama----------------------------------------------------
         }
@@ -60,5 +62,12 @@ public class Reklam : MonoBehaviour
        
     }
 
-
+    public void ReklamiGoster()
+    {
+        if (interstitial.IsLoaded())
+        {
+            interstitial.Show();
+            Debug.Log("GİRDİK");
+        }
+    }
 }

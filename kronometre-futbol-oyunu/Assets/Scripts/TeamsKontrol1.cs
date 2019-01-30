@@ -66,10 +66,7 @@ public class TeamsKontrol1 : MonoBehaviour
 
     public void Continue()
     {
-        if (Reklam.interstitial.IsLoaded())
-        {
-            Reklam.interstitial.Show();
-        }
+        GameObject.FindGameObjectWithTag("reklamtag").GetComponent<Reklam>().ReklamiGoster();
         BGSoundScript.Instance.gameObject.GetComponent<AudioSource>().Play();
           SceneManager.LoadScene(0);
         

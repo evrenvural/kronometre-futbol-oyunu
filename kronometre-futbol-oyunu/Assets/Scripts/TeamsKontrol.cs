@@ -26,7 +26,6 @@ public class TeamsKontrol : MonoBehaviour
     {
         spiker = objeSpiker.GetComponent<Spiker>();
         kontrol = obje.GetComponent<Kontrol>();
-        
         team[0].text = PlayerPrefs.GetString("secilenTakim");
         team[1].text = PlayerPrefs.GetString("rakipTakim");
 
@@ -74,12 +73,7 @@ public class TeamsKontrol : MonoBehaviour
         BGSoundScript.Instance.gameObject.GetComponent<AudioSource>().Play();
         int takimSayisi = PlayerPrefs.GetInt("takimSayisi");
         PlayerPrefs.SetInt("takimSayisi", takimSayisi / 2);
-
-        if (Reklam.interstitial.IsLoaded())
-        {
-            Reklam.interstitial.Show();
-        }
-
+        GameObject.FindGameObjectWithTag("reklamtag").GetComponent<Reklam>().ReklamiGoster();
         if (MacKazanildiMi() && takimSayisi/2 != 1) // Kazandın İleri
         {
             SceneManager.LoadScene(ileri);
